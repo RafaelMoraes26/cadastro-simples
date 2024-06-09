@@ -11,7 +11,6 @@ public class UserInfoController {
 
     @PostMapping("/create")
     public UserInfoResponse createUserInfos(@RequestBody UserInfoRequest request) {
-        UserInfoResponse response = new UserInfoResponse(request.getFullName(), request.getUsername(), request.getEmail());
-        return response;
+        return new UserInfoResponse(request.getFullName(), request.getUsername(), request.getEmail());
     }
 }
