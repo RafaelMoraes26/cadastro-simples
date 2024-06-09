@@ -1,7 +1,5 @@
 package br.com.cadastro.simples.repository.document;
 
-import java.time.LocalDate;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
