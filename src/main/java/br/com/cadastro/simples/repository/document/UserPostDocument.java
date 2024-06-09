@@ -20,5 +20,5 @@ public class UserPostDocument {
     private String title;
     private String content;
     private String username;
-    private LocalDate date;
+    private String date;
 }
