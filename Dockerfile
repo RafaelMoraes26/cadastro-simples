@@ -1,19 +1,14 @@
-# Usando a imagem oficial do RabbitMQ
-FROM rabbitmq:3-management
+# Use a imagem base do OpenJDK 21
+FROM openjdk:21-jdk-slim
 
-# Instala o curl
-RUN apt-get update && apt-get install -y curl
+# Define o diretório de trabalho dentro do contêiner
+WORKDIR /app
 
-# Baixa o rabbitmqadmin
-RUN curl -O https://raw.githubusercontent.com/rabbitmq/rabbitmq-server/v3.12.x/deps/rabbitmq_management/bin/rabbitmqadmin && \
-    chmod +x rabbitmqadmin && \
-    mv rabbitmqadmin /usr/local/bin/
+# Copia o jar da aplicação para o diretório de trabalho no contêiner
+COPY build/libs/cadastro-simples-0.0.1-SNAPSHOT.jar /app/cadastro-simples.jar
 
-# Adiciona o script de inicialização
-COPY docker/config/rabbitmq/init.sh /init.sh
+# Expõe a porta 8080 para acessar a aplicação
+EXPOSE 8080
 
-# Concede permissão de execução ao script
-RUN chmod +x /init.sh
-
-# Define o comando de inicialização
-CMD ["sh", "-c", "/init.sh"]
+# Comando para rodar a aplicação
+ENTRYPOINT ["java", "-jar", "cadastro-simples.jar"]
