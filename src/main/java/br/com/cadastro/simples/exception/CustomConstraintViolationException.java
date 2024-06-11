@@ -7,11 +7,11 @@ import java.util.Set;
 
 public class CustomConstraintViolationException extends ConstraintViolationException {
 
-    private final Object invalidObject;
+    private final transient Object invalidObject;
 
-    public <T> CustomConstraintViolationException(Set<ConstraintViolation<T>> constraintViolations, T object) {
+    public <T> CustomConstraintViolationException(Set<ConstraintViolation<T>> constraintViolations, Object message) {
         super(constraintViolations);
-        this.invalidObject = object;
+        this.invalidObject = message;
     }
 
     @Override
