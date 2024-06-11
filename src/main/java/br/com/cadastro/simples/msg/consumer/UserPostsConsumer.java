@@ -30,14 +30,14 @@ public class UserPostsConsumer {
     }
 
     @RabbitListener(queues = "${userPostQueue.name}", containerFactory = "rabbitListenerContainerFactory")
-    public void handleMessage(@Payload String jsonString) {
+    public void handleMessage(@Payload String message) {
         try {
-            UserPostEventDTO eventDTO = objectMapper.readValue(jsonString, UserPostEventDTO.class);
-            validator.validate(eventDTO);
+            UserPostEventDTO eventDTO = objectMapper.readValue(message, UserPostEventDTO.class);
+            validator.validate(eventDTO, message);
             userPostRepository.save(userPostMapper.fromEventToDocument(eventDTO));
             log.info("Message processed successfully");
         } catch (Exception e) {
-            log.error("Error processing message: {}", jsonString, e);
+            log.error("Error processing message: {}", message, e);
             throw new MapperFromJsonException("Message processing failed", e);
         }
     }

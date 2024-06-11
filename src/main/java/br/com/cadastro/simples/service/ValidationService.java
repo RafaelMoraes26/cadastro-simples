@@ -19,10 +19,10 @@ public class ValidationService {
         this.validator = validator;
     }
 
-    public <T> void validate(T object) {
+    public <T> void validate(T object, String message) throws CustomConstraintViolationException {
         Set<ConstraintViolation<T>> violations = validator.validate(object);
         if (!violations.isEmpty()) {
-            throw new CustomConstraintViolationException(violations, object);
+            throw new CustomConstraintViolationException(violations, message);
         }
     }
 }
