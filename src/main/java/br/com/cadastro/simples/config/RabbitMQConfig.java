@@ -19,7 +19,7 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue userPostQueue() {
-        return QueueBuilder.nonDurable(userPostQueue)
+        return QueueBuilder.durable(userPostQueue)
             .withArgument("x-dead-letter-exchange", userPostDLX)
             .withArgument("x-dead-letter-routing-key", userPostDLQ)
             .build();

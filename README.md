@@ -1,55 +1,63 @@
-# Como Rodar o RabbitMQ via Docker
+# Projeto de Cadastro Simples
 
-Este repositório contém um Dockerfile que configura um servidor RabbitMQ e cria uma fila não durável chamada `UserPostsQueue`.
+Este projeto é uma aplicação de cadastro simples que utiliza MongoDB e RabbitMQ como dependências. Este guia ajudará a configurar e executar o projeto usando Docker Compose.
 
 ## Pré-requisitos
 
-- Docker instalado em seu sistema. Você pode fazer o download e seguir as instruções de instalação [aqui](https://www.docker.com/get-started).
+- **Docker**: [Instalar Docker](https://docs.docker.com/get-docker/)
+- **Docker Compose**: [Instalar Docker Compose](https://docs.docker.com/compose/install/)
 
 ## Instruções de Uso
 
-1. Clone este repositório em sua máquina local:
+### Clonar o Repositório
 
-    ```bash
-    git clone https://github.com/RafaelMoraes26/cadastro-simples
-    ```
+Primeiro, clone o repositório do projeto para sua máquina local:
 
-2. Navegue até o diretório clonado:
+```bash
+git clone https://github.com/RafaelMoraes26/cadastro-simples
+cd cadastro-simples
+```
+### Construir e Executar com Docker Compose
 
-    ```bash
-    cd cadastro-simples
-    ```
+Execute os seguintes comandos no diretório do projeto para construir e rodar a aplicação e suas dependências utilizando Docker:
 
-3. Construa a imagem Docker:
+```bash
+# Construir as imagens Docker
+docker-compose build
 
-    ```bash
-    docker build -t rabbitmq-custom .
-    ```
+# Subir os contêineres
+docker-compose up
+```
+Após executar esses comandos, a aplicação estará acessível em [http://localhost:8080](http://localhost:8080).
 
-4. Após a construção da imagem, execute o contêiner:
+### Verificar Logs
 
-    ```bash
-    docker run -d --name rabbitmq-server -p 5672:5672 -p 15672:15672 rabbitmq-custom
-    ```
+Para acessar os logs da aplicação em tempo real, utilize o comando:
 
-5. Agora o RabbitMQ estará em execução no seu sistema. Você pode acessar o painel de gerenciamento do RabbitMQ em [http://localhost:15672](http://localhost:15672) utilizando as seguintes credenciais padrão:
-    - **Usuário:** guest
-    - **Senha:** guest
+```bash
+docker-compose logs -f app
+```
 
-6. Para parar o contêiner, execute o seguinte comando:
+Este comando permite acompanhar os logs de eventos da aplicação, facilitando o diagnóstico de problemas e a verificação de operações normais.
 
-    ```bash
-    docker stop rabbitmq-server
-    ```
+### Parar e Remover os Contêineres
 
-7. Para remover o contêiner, execute o seguinte comando:
+Quando precisar parar e remover todos os serviços relacionados ao projeto, execute:
 
-    ```bash
-    docker rm rabbitmq-server
-    ```
+```bash
+docker-compose down
+```
 
-## Personalizações
+Este comando desliga todos os contêineres iniciados pelo docker-compose up, removendo os contêineres, redes gerenciadas e volumes montados, caso não sejam volumes persistentes.
 
-- Se desejar fazer alterações na configuração do RabbitMQ ou na fila criada, você pode modificar o arquivo `Dockerfile` e reconstruir a imagem conforme necessário.
+### Diagnóstico e Solução de Problemas
 
-- Para outras customizações ou configurações avançadas, consulte a documentação oficial do RabbitMQ em [https://www.rabbitmq.com/](https://www.rabbitmq.com/).
+Se encontrar dificuldades para acessar a aplicação ou se ocorrerem erros durante a execução, verifique os logs detalhados dos contêineres, como mencionado anteriormente. Além disso, certifique-se de que todas as portas necessárias não estão sendo bloqueadas ou já utilizadas por outros processos em sua máquina.
+
+Para verificar o status dos contêineres e identificar qualquer contêiner que não esteja rodando corretamente, utilize:
+
+```bash
+docker ps -a
+```
+
+Este comando lista todos os contêineres, permitindo ver quais estão em execução e quais pararam. Para problemas mais específicos, consultar a documentação oficial do Docker e Docker Compose pode fornecer soluções mais detalhadas e ajustadas ao seu ambiente específico.
