@@ -4,34 +4,41 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import br.com.cadastro.simples.service.ValidationService;
+import br.com.cadastro.simples.dto.user.post.UserPostEventDTO;
 import br.com.cadastro.simples.exception.MapperFromJsonException;
+import br.com.cadastro.simples.mapper.UserPostMapper;
 import br.com.cadastro.simples.repository.UserPostRepository;
-import br.com.cadastro.simples.repository.document.UserPostDocument;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 public class UserPostsConsumer {
 
     private final UserPostRepository userPostRepository;
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
+    private final UserPostMapper userPostMapper;
+    private final ValidationService validator;
 
-    public UserPostsConsumer(UserPostRepository userPostRepository) {
+    public UserPostsConsumer(UserPostRepository userPostRepository, ObjectMapper objectMapper, UserPostMapper userPostMapper, ValidationService validator) {
         this.userPostRepository = userPostRepository;
+        this.objectMapper = objectMapper;
+        this.userPostMapper = userPostMapper;
+        this.validator = validator;
     }
 
-    @RabbitListener(queues = "${queue.name}")
-    public void receive(@Payload String message) {
-        userPostRepository.save(mapToUserPostDocument(message));
-    }
-
-    private UserPostDocument mapToUserPostDocument(String jsonString) {
+    @RabbitListener(queues = "${userPostQueue.name}", containerFactory = "rabbitListenerContainerFactory")
+    public void handleMessage(@Payload String jsonString) {
         try {
-            return objectMapper.readValue(jsonString, UserPostDocument.class);
-        } catch (JsonProcessingException e) {
-            String exceptionMessage = String.format("Error occurred while converting message >>>%s<<< to object: %s", jsonString, e.getMessage());
-            throw new MapperFromJsonException(exceptionMessage, e);
+            UserPostEventDTO eventDTO = objectMapper.readValue(jsonString, UserPostEventDTO.class);
+            validator.validate(eventDTO);
+            userPostRepository.save(userPostMapper.fromEventToDocument(eventDTO));
+            log.info("Message processed successfully");
+        } catch (Exception e) {
+            log.error("Error processing message: {}", jsonString, e);
+            throw new MapperFromJsonException("Message processing failed", e);
         }
     }
 }
