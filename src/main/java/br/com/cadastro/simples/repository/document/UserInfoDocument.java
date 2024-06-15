@@ -1,5 +1,7 @@
 package br.com.cadastro.simples.repository.document;
 
+import java.time.LocalDateTime;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -19,4 +21,6 @@ public class UserInfoDocument {
     @Indexed(unique = true)
     private String username;
     private String email;
+    private LocalDateTime createdDate;
+    private LocalDateTime updatedDate;
 }

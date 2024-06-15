@@ -4,9 +4,8 @@ import jakarta.validation.constraints.Email;
 import lombok.Data;
 
 @Data
-public class UserInfoRequest {
+public class UserInfoUpdateRequest {
     private String fullName;
-    private String username;
     @Email
     private String email;
 }

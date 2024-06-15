@@ -11,4 +11,6 @@ import br.com.cadastro.simples.repository.document.UserInfoDocument;
 public interface UserInfoRepository extends MongoRepository<UserInfoDocument, String> {
 
     Optional<UserInfoDocument> findByUsername(String username);
+
+    Optional<UserInfoDocument> findByEmail(String email);
 }
