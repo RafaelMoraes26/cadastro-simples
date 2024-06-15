@@ -37,7 +37,11 @@ services:
       context: ./docker/config/mongodb
       dockerfile: Dockerfile
     ports:
-      - "27017:27017"
+      - "27018:27017"
+    volumes:
+      - ./docker/config/mongodb/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
+    environment:
+      MONGO_INITDB_DATABASE: cadastroSimples
     networks:
       - app-network
 

@@ -1,5 +1,7 @@
 package br.com.cadastro.simples.repository.document;
 
+import java.time.LocalDateTime;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -18,5 +20,6 @@ public class UserPostDocument {
     private String title;
     private String content;
     private String username;
-    private String date;
+    private LocalDateTime createdDate;
+    private LocalDateTime updatedDate;
 }

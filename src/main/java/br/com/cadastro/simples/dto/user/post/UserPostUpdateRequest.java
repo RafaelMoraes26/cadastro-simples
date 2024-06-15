@@ -7,12 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserPostResponse {
+public class UserPostUpdateRequest {
 
-    private String id;
     private String title;
     private String content;
-    private String username;
-    private String createdDate;
-    private String updatedDate;
 }
