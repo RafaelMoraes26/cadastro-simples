@@ -1,4 +1,4 @@
-package br.com.cadastro.simples.dto.user;
+package br.com.cadastro.simples.dto.user.info;
 
 import lombok.Data;
 

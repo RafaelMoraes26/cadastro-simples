@@ -2,8 +2,8 @@ package br.com.cadastro.simples.mapper;
 
 import org.springframework.stereotype.Component;
 
-import br.com.cadastro.simples.dto.user.UserInfoRequest;
-import br.com.cadastro.simples.dto.user.UserInfoResponse;
+import br.com.cadastro.simples.dto.user.info.UserInfoRequest;
+import br.com.cadastro.simples.dto.user.info.UserInfoResponse;
 import br.com.cadastro.simples.repository.document.UserInfoDocument;
 
 @Component
