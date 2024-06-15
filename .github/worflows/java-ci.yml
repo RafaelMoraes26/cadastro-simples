@@ -3,12 +3,10 @@ name: Java CI with Gradle
 on:
   push:
     branches:
-      - master
-    tags:
-      - 'v*.*.*'
+      - '**'  # Isso faz com que o workflow seja acionado em qualquer branch
   pull_request:
     branches:
-      - master
+      - '**'  # Isso faz com que o workflow seja acionado em pull requests para qualquer branch
 
 jobs:
   build:
@@ -69,7 +67,7 @@ jobs:
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
       - name: Create release
-        if: env.NEW_VERSION
+        if: env.NEW_VERSION && github.ref == 'refs/heads/master'
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
