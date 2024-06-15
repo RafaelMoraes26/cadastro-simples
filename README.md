@@ -6,7 +6,10 @@ Este projeto é uma aplicação de cadastro simples que utiliza MongoDB e Rabbit
 
 - **Docker**: [Instalar Docker](https://docs.docker.com/get-docker/)
 - **Docker Compose**: [Instalar Docker Compose](https://docs.docker.com/compose/install/)
+- **Gradle**: [Instalar Gradle](https://gradle.org/releases/)
+- **JDK**: [Instalar JDK17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 
+Tenha em mente que será necessário pelo menos gradle na versão 7.3 para suportar o JDK17
 ## Instruções de Uso
 
 ### Clonar o Repositório
@@ -19,14 +22,11 @@ cd cadastro-simples
 ```
 ### Construir e Executar com Docker Compose
 
-Execute os seguintes comandos no diretório do projeto para construir e rodar a aplicação e suas dependências utilizando Docker:
+Execute o seguinte comando no diretório do projeto para construir e rodar a aplicação e suas dependências utilizando Docker:
 
 ```bash
-# Construir as imagens Docker
-docker-compose build
-
-# Subir os contêineres
-docker-compose up
+# Buildar, construir e subir imagens no docker
+gradle clean build && docker-compose build --no-cache && docker-compose up
 ```
 Após executar esses comandos, a aplicação estará acessível em [http://localhost:8080](http://localhost:8080).
 
