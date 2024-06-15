@@ -1,5 +1,7 @@
 package br.com.cadastro.simples.mapper;
 
+import java.time.LocalDateTime;
+
 import org.springframework.stereotype.Component;
 
 import br.com.cadastro.simples.dto.user.info.UserInfoRequest;
@@ -22,6 +24,8 @@ public class UserInfoMapper {
         document.setFullName(request.getFullName());
         document.setUsername(request.getUsername());
         document.setEmail(request.getEmail());
+        document.setCreatedDate(LocalDateTime.now());
+        document.setUpdatedDate(LocalDateTime.now());
         return document;
     }
 }
